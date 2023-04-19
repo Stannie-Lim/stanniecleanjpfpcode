@@ -1,4 +1,3 @@
-import { Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -9,8 +8,8 @@ import { StudentForm } from "./forms/StudentForm";
 
 export const SingleStudent = ({ match }) => {
   const { id } = match.params;
-  const { student, campus } = useSelector(({ students, campuses }) => ({
-    campus: campuses.find(({ id }) => id === student?.campusId),
+  const { student, campuses } = useSelector(({ students, campuses }) => ({
+    campuses,
     student: students.find((student) => student.id === +id),
   }));
 
@@ -22,12 +21,14 @@ export const SingleStudent = ({ match }) => {
     dispatch(editStudent(values, id));
   };
 
+  const campus = campuses.find(({ id }) => id === student?.campusId);
+
   return (
     <>
       <Link to="/students">Back</Link>
       <StudentCard student={student} campus={campus} />
 
-      <Typography>Edit Student</Typography>
+      <h1>Edit Student</h1>
       <StudentForm student={student} submitForm={submitForm} isEdit />
     </>
   );

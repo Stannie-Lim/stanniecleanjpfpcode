@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-
-import { TextField, Grid, Button } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const StudentForm = ({ student, submitForm, isEdit }) => {
   const campuses = useSelector(({ campuses }) => campuses);
 
   const [inputs, setInputs] = useState({
-    firstName: student?.firstName || '',
-    lastName: student?.lastName || '',
-    email: student?.email || '',
-    imageUrl: student?.imageUrl || '',
+    firstName: student?.firstName || "",
+    lastName: student?.lastName || "",
+    email: student?.email || "",
+    imageUrl: student?.imageUrl || "",
     gpa: student?.gpa || 0,
-    campusId: student?.campusId,
+    campusId: student?.campusId || campuses[0]?.id,
   });
 
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   const onChange = ({ target: { name, value } }) => {
     setInputs({
@@ -32,40 +29,57 @@ export const StudentForm = ({ student, submitForm, isEdit }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <TextField required name="firstName" value={inputs.firstName} onChange={onChange} fullWidth label="First name" variant="outlined" />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField required name="lastName" value={inputs.lastName} onChange={onChange} fullWidth label="Last name" variant="outlined" />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField required name="email" value={inputs.email} onChange={onChange} fullWidth label="Email" variant="outlined" />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField name="imageUrl" value={inputs.imageUrl} onChange={onChange} fullWidth label="Image url" variant="outlined" />
-        </Grid>
-        <Grid item xs={3}>
-          <TextField required name="gpa" value={inputs.gpa} onChange={onChange} fullWidth label="GPA" variant="outlined" type="number" InputProps={{ inputProps: { min: 0, max: 4, step: 0.1, } }} />
-        </Grid>
-        <Grid item xs={3}>
-          <Autocomplete
-            onChange={(_, { id }) => onChange({ target: { name: 'campusId', value: id } })}
-            inputValue={inputValue}
-            onInputChange={(_, value) => setInputValue(value)}
-            value={campuses.find(({ id }) => id === inputs.campusId)}
-            getOptionLabel={({ name }) => name}
-            options={campuses}
-            renderInput={(params) => <TextField {...params} required label="Campus" fullWidth variant="outlined" />}
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <Button type="submit" variant="outlined">{isEdit ? 'Edit' : 'Create'}</Button>
-        </Grid>
-        <Grid item xs={12}>
-          {inputs.imageUrl && <img src={inputs.imageUrl} style={{ width: '300px', height: '300px' }} />}
-        </Grid>
-      </Grid>
+      <input
+        required
+        name="firstName"
+        value={inputs.firstName}
+        onChange={onChange}
+        placeholder="First name"
+      />
+      <input
+        required
+        name="lastName"
+        value={inputs.lastName}
+        onChange={onChange}
+        placeholder="Last name"
+      />
+      <input
+        required
+        name="email"
+        value={inputs.email}
+        onChange={onChange}
+        placeholder="Email"
+      />
+      <input
+        name="imageUrl"
+        value={inputs.imageUrl}
+        onChange={onChange}
+        placeholder="Image url"
+      />
+      <input
+        required
+        name="gpa"
+        value={inputs.gpa}
+        onChange={onChange}
+        placeholder="GPA"
+        type="number"
+      />
+      <select value={inputs.campusId} name="campusId">
+        {campuses.map(({ id, name }) => (
+          <option key={id} value={id}>
+            {name}
+          </option>
+        ))}
+      </select>
+      <button type="submit" variant="outlined">
+        {isEdit ? "Edit" : "Create"}
+      </button>
+      {inputs.imageUrl && (
+        <img
+          src={inputs.imageUrl}
+          style={{ width: "300px", height: "300px" }}
+        />
+      )}
     </form>
   );
 };

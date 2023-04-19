@@ -1,4 +1,3 @@
-import { Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -8,8 +7,8 @@ import { CampusForm } from "./forms/CampusForm";
 
 export const SingleCampus = ({ match }) => {
   const { id } = match.params;
-  const { campus, student } = useSelector(({ campuses, students }) => ({
-    student: students.filter(({ campusId }) => campusId === campus.id),
+  const { campus, students } = useSelector(({ campuses, students }) => ({
+    students,
     campus: campuses.find((campus) => campus.id === +id),
   }));
 
@@ -26,7 +25,7 @@ export const SingleCampus = ({ match }) => {
       <Link to="/campuses">Back</Link>
       <CampusCard campus={campus} students={students} />
 
-      <Typography>Edit Campus</Typography>
+      <h1>Edit Campus</h1>
       <CampusForm campus={campus} submitForm={submitForm} isEdit />
     </>
   );

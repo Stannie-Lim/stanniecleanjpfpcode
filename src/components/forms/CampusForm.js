@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import { TextField, Grid, Button } from "@material-ui/core";
-
 const capitalizeFirstLetter = (str) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -27,34 +25,24 @@ export const CampusForm = ({ campus, submitForm, isEdit }) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Grid container spacing={2}>
-        {Object.entries(inputs).map(([inputKey, inputValue]) => (
-          <Grid item xs={3}>
-            <TextField
-              required
-              name={inputKey}
-              value={inputValue}
-              onChange={onChange}
-              fullWidth
-              label={capitalizeFirstLetter(inputKey)}
-              variant="outlined"
-            />
-          </Grid>
-        ))}
-        <Grid item xs={3}>
-          <Button type="submit" variant="outlined">
-            {isEdit ? "Edit" : "Create"}
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          {inputs.imageUrl && (
-            <img
-              src={inputs.imageUrl}
-              style={{ width: "300px", height: "300px" }}
-            />
-          )}
-        </Grid>
-      </Grid>
+      {Object.entries(inputs).map(([inputKey, inputValue]) => (
+        <input
+          required
+          name={inputKey}
+          value={inputValue}
+          onChange={onChange}
+          placeholder={capitalizeFirstLetter(inputKey)}
+        />
+      ))}
+      <button type="submit" variant="outlined">
+        {isEdit ? "Edit" : "Create"}
+      </button>
+      {inputs.imageUrl && (
+        <img
+          src={inputs.imageUrl}
+          style={{ width: "300px", height: "300px" }}
+        />
+      )}
     </form>
   );
 };

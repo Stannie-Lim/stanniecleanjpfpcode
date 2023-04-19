@@ -1,34 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Card, Avatar, CardHeader, CardContent, Typography } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-
-const useStyles = makeStyles(() => ({
-  card: {
-    maxWidth: '350px',
-  },
-}));
+import { Link } from "react-router-dom";
 
 export const StudentCard = ({ student, campus }) => {
-  const classes = useStyles();
   return (
-    <Card variant="outlined" className={classes.card}>
-      <CardHeader
-        avatar={
-          <Avatar src={student.imageUrl} />
-        }
-        title={student.fullName}
-        subheader={`GPA: ${student.gpa}`}
-      />
-      {campus && (
-        <CardContent>
-          <Typography variant="h6">
-            School: 
-            <Link to={`/campuses/${campus.id}`}>{campus.name}</Link>
-          </Typography>
-        </CardContent>
-      )}
-    </Card>
+    <>
+      <div>
+        <h1>{student.name}</h1>
+        <h3>{student.email}</h3>
+      </div>
+      {campus && <h1>{campus.name}</h1>}
+    </>
   );
 };
