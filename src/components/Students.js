@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
+import Button from "@mui/material/Button";
+
 import { createStudent, deleteStudent } from "../store";
 
 import { StudentForm } from "./forms/StudentForm";
@@ -26,9 +28,15 @@ export const Students = () => {
       {students.map(({ id, fullName }) => (
         <div>
           <Link to={`/students/${id}`}>{fullName}</Link>
-          <button onClick={() => destroyStudent(id)}>
+          <Button
+            disabled
+            color="warning"
+            variant="outlined"
+            fullWidth
+            onClick={() => destroyStudent(id)}
+          >
             Utterly destroy student
-          </button>
+          </Button>
         </div>
       ))}
     </ul>

@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { editStudent } from "../store";
 
 import { StudentCard } from "./cards/StudentCard";
 import { StudentForm } from "./forms/StudentForm";
 
-export const SingleStudent = ({ match }) => {
-  const { id } = match.params;
+export const SingleStudent = () => {
+  const { id } = useParams();
   const { student, campuses } = useSelector(({ students, campuses }) => ({
     campuses,
     student: students.find((student) => student.id === +id),
